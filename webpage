@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript Feature Playground</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    h1 { color: teal; }
+    .section { margin-bottom: 20px; }
+    .output { padding: 10px; background: #f0f0f0; border-radius: 5px; white-space: pre-line; }
+    button { margin-top: 10px; padding: 8px 16px; }
+    input { padding: 6px; margin-right: 10px; }
+    .highlight { color: darkblue; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1 id="main-title">JavaScript Feature Playground</h1>
+
+  <div class="section">
+    <input type="text" id="nameInput" placeholder="Enter your name">
+    <button id="greetBtn">Greet Me</button>
+    <div class="output" id="greetOutput"></div>
+  </div>
+
+  <div class="section">
+    <button id="mathBtn">Show Math Features</button>
+    <div class="output" id="mathOutput"></div>
+  </div>
+
+  <div class="section">
+    <button id="destructBtn">Destruct Array & Object</button>
+    <div class="output" id="destructOutput"></div>
+  </div>
+
+  <div class="section">
+    <button id="hoistBtn">Test Hoisting</button>
+    <div class="output" id="hoistOutput"></div>
+  </div>
+
+  <script>
+    const title = document.getElementById("main-title");
+    title.style.textAlign = "center";
+    title.style.textTransform = "uppercase";
+
+    const greet = name => `👋 Hello, ${name}! Welcome to JS World.`;
+
+    const mathFeatures = () => {
+      const nums = [10, 20, 30];
+      const extended = [...nums, 40, 50];
+      const sum = (...args) => args.reduce((a, b) => a + b, 0);
+      const coercion = "5" + 2;
+
+      return `
+Spread: ${extended.join(", ")}
+Rest Sum: ${sum(...extended)}
+Type Coercion ("5" + 2): ${coercion}
+Template Literal Fruits:
+${["Mango", "Orange", "Grapes"].map(f => `- ${f}`).join("\n")}
+      `;
+    };
+
+    const destructuringDemo = () => {
+      const fruits = ["apple", "banana", "cherry"];
+      const [first, , third] = fruits;
+
+      const user = { name: "Likhith", age: 21, skill: "JavaScript" };
+      const { name, skill } = user;
+
+      return `
+Array Destructuring: ${first}, ${third}
+Object Destructuring: Name = ${name}, Skill = ${skill}
+      `;
+    };
+
+    function hoistTest() {
+      let message = "";
+      try {
+        message += `Before declaration: ${hoistedVar}\n`;
+      } catch {
+        message += "Before declaration: hoistedVar is not defined\n";
+      }
+      var hoistedVar = "I was hoisted!";
+      message += `After declaration: ${hoistedVar}`;
+      return message;
+    }
+
+    document.getElementById("greetBtn").addEventListener("click", () => {
+      const name = document.getElementById("nameInput").value || "Guest";
+      document.getElementById("greetOutput").textContent = greet(name);
+    });
+
+    document.getElementById("mathBtn").addEventListener("click", () => {
+      document.getElementById("mathOutput").textContent = mathFeatures();
+    });
+
+    document.getElementById("destructBtn").addEventListener("click", () => {
+      document.getElementById("destructOutput").textContent = destructuringDemo();
+    });
+
+    document.getElementById("hoistBtn").addEventListener("click", () => {
+      document.getElementById("hoistOutput").textContent = hoistTest();
+    });
+  </script>
+</body>
+</html>
